@@ -1,0 +1,23 @@
+# file: roles/common/tasks/ufw.yaml
+
+- name: be sure ufw is installed
+  apt:
+    name: ufw
+    state: present
+  tags: ufw
+
+- name: Allow everything and enable UFW
+  ufw:
+    state: enabled
+    policy: allow
+
+- name: Set logging
+  ufw:
+    logging: 'off'
+  tags: ufw
+
+- name: Allow connections to SSH
+  ufw:
+    rule: allow
+    name: OpenSSH
+  tags: ufw

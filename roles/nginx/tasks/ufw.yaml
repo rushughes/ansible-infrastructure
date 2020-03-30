@@ -1,0 +1,4 @@
+- name: Allow connections to Nginx Full
+  ufw:
+    rule: allow
+    name: Nginx Full

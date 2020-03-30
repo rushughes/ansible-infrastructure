@@ -1,0 +1,25 @@
+postfix_hostname: example2.domain.com
+postfix_destination: example2.domain.com, localhost.domain.com, , localhost
+
+shinken_webui_url: shinken.domain.com
+
+shinken_contacts:
+ - contact_name: 'admin'
+   email: 'admin@domain.com'
+   password: 'password1234!'
+   is_admin: 1
+   expert: 1
+   can_submit_commands: 1
+
+shinken_services:
+ - { service_description: 'ping test', check_command: 'check_ping', hostgroup_name: [ 'infrastructure' ] }
+
+shinken_hosts:
+ - { host_name: 'example1.domain.com', hostgroups: [ 'infrastructure' ]}
+ - { host_name: 'example2.domain.com', hostgroups: [ 'infrastructure' ]}
+
+shinken_nginx:
+  server_name: shinken.domain.com
+  access_log: shinken.domain.com_access.log
+  error_log: shinken.domain.com_error.log
+  proxy_redirect: http://shinken.domain.com:80

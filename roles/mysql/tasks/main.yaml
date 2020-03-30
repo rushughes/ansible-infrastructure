@@ -1,0 +1,14 @@
+- name: be sure mysql-server is installed
+  apt:
+    name: mysql-server
+    state: present
+  tags: mysql
+
+- name: be sure mysql is running and enabled
+  service:
+    name: mysql
+    state: started
+    enabled: yes
+  tags: mysql
+
+  

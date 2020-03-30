@@ -1,0 +1,13 @@
+servers:
+  hosts:
+    example1.domain.com
+    example2.domain.com
+webservers:
+  hosts:
+    example1.domain.com
+dbservers:
+  hosts:
+    example1.domain.com
+monservers:
+  hosts:
+    example2.domain.com

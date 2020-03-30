@@ -1,0 +1,52 @@
+- name: setup nginx wordpress sites
+  template:
+    src: nginx-wordpress.conf.j2
+    dest: /etc/nginx/sites-available/{{ item.filename }}
+    owner: root
+    group: root
+    mode: 0644
+  loop: "{{ wordpress }}"
+
+- name: setup nginx wordpress site symlinks
+  file:
+    src: /etc/nginx/sites-available/{{ item.filename }}
+    dest: /etc/nginx/sites-enabled/{{ item.filename }}
+    owner: root
+    group: root
+    state: link
+  loop: "{{ wordpress }}"
+  notify:
+    - restart nginx
+  tags: nginx
+
+- name: setup wordpress php-fpm
+  template:
+    src: php-fpm.conf.j2
+    dest: /etc/php/7.2/fpm/pool.d/{{ item.filename }}
+    owner: root
+    group: root
+    mode: 0644
+  loop: "{{ wordpress }}"
+  notify:
+    - restart php7.2-fpm
+  tags: php-fpm
+
+- name: Create wordpress system users
+  user:
+    name: "{{ item.user }}"
+  loop: "{{ wordpress }}"
+
+- name: Create wordpress mysql databases
+  mysql_db:
+    name: "{{ item.user }}"
+    state: present
+  loop: "{{ wordpress }}"
+
+- name: Create wordpress mysql database users
+  mysql_user:
+    name: "{{ item.user }}"
+    host: localhost
+    password: "{{ lookup('password', 'credentials/mysql/' + item.user + ' chars=ascii_letters,digits length=15') }}"
+    priv: "{{ item.user }}.*:ALL"
+    state: present
+  loop: "{{ wordpress }}"

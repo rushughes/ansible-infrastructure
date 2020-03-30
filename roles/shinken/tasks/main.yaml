@@ -1,0 +1,13 @@
+# file: roles/shinken/tasks/main.yaml
+
+- import_tasks: install.yaml
+  tags:
+    - shinken
+
+- import_tasks: configure.yaml
+  tags:
+    - shinken
+
+- import_tasks: webui.yaml
+  tags:
+    - shinken

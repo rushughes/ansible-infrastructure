@@ -1,0 +1,21 @@
+
+- name: be sure nginx is configured for shinken webui
+  template:
+    src: nginx.j2
+    dest: /etc/nginx/sites-available/{{shinken_webui_url}}
+  tags: nginx
+
+- name: Create a symbolic link to enable the nginx site
+  file:
+    src: /etc/nginx/sites-available/{{shinken_webui_url}}
+    dest: /etc/nginx/sites-enabled/{{shinken_webui_url}}
+    owner: root
+    group: root
+    state: link
+  tags: nginx
+
+- name: Deny connections to webui with UFW
+  ufw:
+    rule: deny
+    port: 7767
+  tags: ufw

@@ -1,0 +1,87 @@
+# file: roles/shinken/tasks/install.yaml
+
+- name: be sure python-pip is installed
+  apt:
+    name: python-pip
+    state: present
+  tags: python
+
+- name: be sure python-pycurl is installed
+  apt:
+    name: python-pycurl
+    state: present
+  tags: python
+
+- name: be sure python-setuptools is installed
+  apt:
+    name: python-setuptools
+    state: present
+  tags: python
+
+- name: be sure python-wheel is installed
+  apt:
+    name: python-wheel
+    state: present
+  tags: python
+
+- name: be sure python-cherrypy3 is installed
+  apt:
+    name: python-cherrypy3
+    state: present
+  tags: python
+
+- name: Create shinken group
+  user:
+    name: shinken
+    system: yes
+
+- name: Create shinken user
+  user:
+    name: shinken
+    group: shinken
+    system: yes
+
+#- name: be sure shinken is installed
+#  pip:
+#    name: shinken
+#    extra_args: --install-option="--prefix=/"
+
+- name: be sure monitoring-plugins is installed
+  apt:
+    name: monitoring-plugins
+    state: present
+
+- name: be sure nagios-plugins-contrib is installed
+  apt:
+    name: nagios-plugins-contrib
+    state: present
+
+- name: create shinken directory
+  file:
+    path: /etc/shinken
+    state: directory
+
+- name: create contacts directory
+  file:
+    path: "{{ shinken_config_contacts }}"
+    state: directory
+
+- name: create brokers directory
+  file:
+    path: "{{shinken_config_broker}}"
+    state: directory
+
+- name: create services directory
+  file:
+    path: "{{shinken_config_services}}"
+    state: directory
+
+- name: create hosts directory
+  file:
+    path: "{{shinken_config_hosts}}"
+    state: directory
+
+- name: create hostgroups directory
+  file:
+    path: "{{shinken_config_hostgroups}}"
+    state: directory

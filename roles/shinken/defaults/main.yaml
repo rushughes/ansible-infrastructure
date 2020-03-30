@@ -1,0 +1,6 @@
+---
+shinken_config_contacts: /etc/shinken/contacts/
+shinken_config_broker: /etc/shinken/brokers/
+shinken_config_services: /etc/shinken/services/
+shinken_config_hosts: /etc/shinken/hosts/
+shinken_config_hostgroups: /etc/shinken/hostgroups/

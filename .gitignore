@@ -1,0 +1,8 @@
+old
+!host_vars/
+host_Vars/*
+!host_vars/example*
+!credentials
+credentials/*
+!credentials/.gitignore
+production.yaml

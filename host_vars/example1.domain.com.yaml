@@ -1,0 +1,20 @@
+postfix_hostname: example1.domain.com
+postfix_destination: example1.domain.com, localhost.domain.com, , localhost
+nginx:
+  redirects:
+  - filename: example1.conf
+    listen: 80
+    server_name: example1.domain.com www.example1.domain.com
+    root: /var/www/html/domain
+    redirect: https://www.domain.com$request_uri
+    access_log: example1-access.log
+    error_log: example1-error.log
+    location_google: google1234567890abcdef.html
+wordpress:
+  - filename: domain.conf
+    domain: domain.com
+    server_name: domain.com www.domain.com
+    root: /var/www/html/domain
+    user: domain
+    access_log: domain-access.log
+    error_log: domain-error.log

@@ -1,0 +1,18 @@
+server {
+    listen {{ item.listen }};
+    server_name {{ item.server_name }};
+    root {{ item.root }};
+
+    location /BingSiteAuth.xml {
+    }
+
+    location /{{ item.location_google }} {
+    }
+
+    location / {
+        return 301 {{ item.redirect }};
+    }
+
+    access_log /var/log/nginx/{{ item.access_log }};
+    error_log /var/log/nginx/{{ item.error_log }} warn;
+}

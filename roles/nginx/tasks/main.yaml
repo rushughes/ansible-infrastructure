@@ -1,0 +1,50 @@
+# file: roles/nginx/tasks/ntp.yaml
+
+- name: be sure nginx is installed
+  apt:
+    name: nginx
+    state: present
+  tags: nginx
+
+- name: be sure nginx is configured
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart nginx
+  tags: nginx
+
+- name: be sure nginx is running and enabled
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+  tags: nginx
+
+- name: setup http redirects
+  template:
+    src: nginx-redirect.conf.j2
+    dest: /etc/nginx/sites-available/{{ item.filename }}
+    owner: root
+    group: root
+    mode: 0644
+  loop: "{{ nginx.redirects }}"
+
+- name: setup http redirects symlinks
+  file:
+    src: /etc/nginx/sites-available/{{ item.filename }}
+    dest: /etc/nginx/sites-enabled/{{ item.filename }}
+    owner: root
+    group: root
+    state: link
+  loop: "{{ nginx.redirects }}"
+  notify:
+    - restart nginx
+  tags: nginx
+
+- import_tasks: ufw.yaml
+  tags:
+    - ufw

@@ -1,0 +1,26 @@
+# file: roles/common/tasks/postfix.yaml
+
+- name: be sure postfix is installed
+  apt:
+    name: postfix
+    state: present
+
+- name: Deny connections to postfix
+  ufw:
+    rule: deny
+    name: postfix
+  tags: ufw
+
+- name: be sure postfix is configured
+  template:
+    src: main.cf.j2
+    dest: /etc/postfix/main.cf
+  notify:
+    - restart ntpd
+  tags: ntp
+
+- name: be sure postfix is running and enabled
+  service:
+    name: postfix
+    state: started
+    enabled: yes

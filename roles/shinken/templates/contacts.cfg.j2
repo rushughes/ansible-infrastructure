@@ -1,0 +1,7 @@
+# {{ ansible_managed }}
+define contact{
+    {# loop through all key:value pairs and output the results #}
+    {% for key, value in item.iteritems() %}
+        {{ key }}      {{ value }}
+    {% endfor %}
+}

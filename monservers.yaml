@@ -1,0 +1,5 @@
+# file: dbservers.yaml
+- hosts: monservers
+  roles:
+    - common
+    - shinken
