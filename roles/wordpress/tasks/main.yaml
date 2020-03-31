@@ -1,3 +1,15 @@
+- name: Create wordpress root directories
+  file:
+    path: "{{ item.root }}"
+    state: directory
+    owner: "{{ item.user }}"
+    group: "{{ item.user }}"
+    recurse: yes
+  loop: "{{ wordpress }}"
+
+- include_tasks: letsencrypt.yaml
+  loop: "{{ wordpress }}"
+
 - name: setup nginx wordpress sites
   template:
     src: nginx-wordpress.conf.j2

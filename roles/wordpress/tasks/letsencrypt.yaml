@@ -1,0 +1,32 @@
+- name: Check that the /etc/letsencrypt/live/{{ item.domain }}/README exists
+  stat:
+    path: "/etc/letsencrypt/live/{{ item.domain }}/README"
+  register: stat_result
+
+- name: make sure wordpress host {{ item.domain }} has letsencrypt ssl
+  block:
+    - name: a little bit of debug
+      debug:
+        var: item
+    - name: Install nginx site for letsencrypt request
+      template:
+        src: nginx-letsencrypt.conf.j2
+        dest: /etc/nginx/sites-available/{{ item.filename }}
+    - name: Delete old enabled nginx site config
+      file:
+        state: absent
+        path: /etc/nginx/sites-enabled/{{ item.filename }}
+    - name: Create a symbolic link to enable the nginx site
+      file:
+        src: /etc/nginx/sites-available/{{ item.filename }}
+        dest: /etc/nginx/sites-enabled/{{ item.filename }}
+        owner: root
+        group: root
+        state: link
+    - name: Reload nginx to activate letsencrypt site
+      service: name=nginx state=restarted
+    - name: Create letsencrypt certificate
+      shell: letsencrypt certonly -n --webroot -w {{ item.root }} -m {{ letsencrypt_email }} --agree-tos -d {{ item.domain }} -d www.{{ item.domain }} --expand
+      args:
+        creates: "/etc/letsencrypt/live/{{ item.domain }}/README"
+  when: stat_result.stat.exists == False
