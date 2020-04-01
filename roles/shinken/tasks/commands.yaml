@@ -1,0 +1,23 @@
+- name: Copy check_http.cfg
+  copy:
+    src: check_http.cfg
+    dest: /etc/shinken/commands/check_http.cfg
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Copy check_https.cfg
+  copy:
+    src: check_https.cfg
+    dest: /etc/shinken/commands/check_https.cfg
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Copy check_ssl_cert.cfg
+  copy:
+    src: check_ssl_cert.cfg
+    dest: /etc/shinken/commands/check_ssl_cert.cfg
+    owner: root
+    group: root
+    mode: '0644'

@@ -17,5 +17,5 @@
 - name: Deny connections to webui with UFW
   ufw:
     rule: deny
-    port: 7767
+    port: "7767"
   tags: ufw

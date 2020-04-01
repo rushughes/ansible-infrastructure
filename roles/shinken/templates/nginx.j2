@@ -7,7 +7,7 @@ server {
     server_name {{ shinken_nginx.server_name }};
 
     access_log          /var/log/nginx/{{ shinken_nginx.access_log }};
-    error_log           /var/log/nginx/{{ shninken_nginx.error_log }};
+    error_log           /var/log/nginx/{{ shinken_nginx.error_log }};
 
     # Avoid robots
     location /robots.txt {

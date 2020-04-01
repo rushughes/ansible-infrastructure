@@ -11,3 +11,11 @@
 - import_tasks: webui.yaml
   tags:
     - shinken
+
+- import_tasks: commands.yaml
+  tags:
+    - shinken
+
+- import_tasks: webservers.yaml
+  tags:
+    - shinken
