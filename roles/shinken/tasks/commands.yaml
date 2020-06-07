@@ -21,3 +21,11 @@
     owner: root
     group: root
     mode: '0644'
+
+- name: Copy check_ssh.cfg
+  copy:
+    src: check_ssh.cfg
+    dest: /etc/shinken/commands/check_ssh.cfg
+    owner: root
+    group: root
+    mode: '0644'

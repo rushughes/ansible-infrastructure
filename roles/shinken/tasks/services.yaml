@@ -1,0 +1,9 @@
+- name: add general host services
+  template:
+    src: services_hosts.cfg.j2
+    dest: /etc/shinken/services/services_hosts.cfg
+
+- name: add wordpress services
+  template:
+    src: services_webservers.cfg.j2
+    dest: /etc/shinken/services/services_webservers.cfg

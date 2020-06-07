@@ -1,0 +1,19 @@
+{% for host in groups['servers'] %}
+# define service {
+#   service_description Alive
+#   check_command check_host_alive
+#   host_name {{ host }}
+#   use generic-service
+#   check_interval 1
+#   retry_interval 1
+# }
+#
+# define service {
+#   service_description SSH
+#   check_command check_ssh
+#   host_name {{ host }}
+#   use generic-service
+#   check_interval 1
+#   retry_interval 1
+# }
+{% endfor %}

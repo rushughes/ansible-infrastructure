@@ -1,0 +1,30 @@
+{% for host in groups['webservers'] %}
+  {% for site in hostvars[host]['wordpress'] %}
+define service {
+  service_description {{ site.domain }} HTTP
+  check_command check_http!www.{{ site.domain }}
+  host_name {{ host }}
+  use generic-service
+  check_interval 1
+  retry_interval 1
+}
+
+define service {
+  service_description {{ site.domain }} HTTPS
+  check_command check_https!www.{{ site.domain }}
+  host_name {{ host }}
+  use generic-service
+  check_interval 1
+  retry_interval 1
+}
+
+define service {
+  service_description {{ site.domain }} SSL cert
+  check_command check_ssl_cert!www.{{ site.domain }}
+  host_name {{ host }}
+  use generic-service
+  check_interval 1
+  retry_interval 1
+}
+  {% endfor %}
+{% endfor %}

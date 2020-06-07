@@ -16,6 +16,6 @@
   tags:
     - shinken
 
-- import_tasks: webservers.yaml
+- import_tasks: services.yaml
   tags:
     - shinken
